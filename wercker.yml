@@ -44,6 +44,7 @@ build:
     - script:
         name: build
         code: npm run build
+        cwd: $WERCKER_ROOT/src
     # - npm-test:
     #     name: run tests
     #     cwd: $WERCKER_ROOT/src
