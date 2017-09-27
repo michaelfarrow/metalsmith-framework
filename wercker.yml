@@ -26,8 +26,10 @@ dev:
         name: run
         code: |
           touch /var/log/build.log
+          touch /var/log/webpack.log
           touch /var/log/express.log
           npm run watch >> /var/log/build.log 2>&1 &
+          npm run dev >> /var/log/webpack.log 2>&1 &
           npm start >> /var/log/express.log 2>&1 &
     - internal/shell:
         code: |
@@ -40,6 +42,10 @@ build:
     - npm-install:
         name: install node development dependencies
         options: --no-optional --silent --only=dev
+        cwd: $WERCKER_ROOT/src
+    - script:
+        name: webpack
+        code: npm run webpack -- -p
         cwd: $WERCKER_ROOT/src
     - script:
         name: build

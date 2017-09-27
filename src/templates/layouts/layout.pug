@@ -23,3 +23,6 @@ html(lang='en')
     block footer
       footer
         p Generated with #{ generator } &mdash; #[a(target='blank', href=url)= url]
+    block js
+      script(src=h().bundle('common.js'))
+      script(src=h().bundle('app.js'))

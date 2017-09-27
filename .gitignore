@@ -2,4 +2,5 @@ node_modules
 .wercker
 *.log
 /src/built
+/src/public/bundle
 /src/package-lock.json

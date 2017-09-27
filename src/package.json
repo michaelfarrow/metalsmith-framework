@@ -10,7 +10,12 @@
     "metalsmith-layouts": "1.8.1",
     "metalsmith-markdown": "0.2.1",
     "metalsmith-permalinks": "0.5.0",
-    "lodash.get": "4.4.2"
+    "metalsmith-static": "0.0.5",
+    "lodash.get": "4.4.2",
+    "webpack": "2.2.1",
+    "webpack-dev-server": "2.3.0",
+    "extract-text-webpack-plugin": "git://github.com/webpack-contrib/extract-text-webpack-plugin.git#v2.0.0-rc.2",
+    "webpack-manifest-plugin": "1.1.0"
   },
   "dependencies": {
     "express": "4.14.1",
@@ -18,8 +23,10 @@
   },
   "scripts": {
     "build": "NODE_ENV=production node build",
+    "dev": "node_modules/.bin/forever --minUptime 1000 --spinSleepTime 1000 node_modules/.bin/webpack-dev-server --colors --content-base built/ --host 0.0.0.0 --port 80 --hot --inline",
     "watch": "node_modules/.bin/forever --minUptime 1000 --spinSleepTime 1000 build.js",
     "start": "env $([ ! -f ../ENVIRONMENT_LOCAL ] || (cat ../ENVIRONMENT_LOCAL | xargs)) node_modules/.bin/forever --minUptime 1000 --spinSleepTime 1000 index.js",
-    "production": "NODE_ENV=production node index"
+    "production": "NODE_ENV=production node index",
+    "webpack": "node_modules/.bin/webpack"
   }
 }

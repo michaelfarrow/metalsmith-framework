@@ -4,6 +4,7 @@ source /usr/bin/_colours
 
 # clear log files
 echo -ne "" > /var/log/build.log
+echo -ne "" > /var/log/webpack.log
 echo -ne "" > /var/log/express.log
 
 # clear screen
@@ -12,4 +13,4 @@ clear
 echo -e "${BGreen}Viewing application log,${Color_Off} hit ctrl+c to end and return to the command line"
 echo ""
 
-tail -f -s 0.1 /var/log/express.log /var/log/build.log
+tail -f -s 0.1 /var/log/express.log /var/log/webpack.log /var/log/build.log

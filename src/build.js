@@ -2,6 +2,7 @@ var Metalsmith = require('metalsmith')
 var markdown = require('metalsmith-markdown')
 var layouts = require('metalsmith-layouts')
 var permalinks = require('metalsmith-permalinks')
+var assets = require('metalsmith-static')
 var get = require('lodash.get')
 
 var env = process.env.NODE_ENV || 'development'
@@ -35,7 +36,14 @@ var ms = Metalsmith(__dirname)
     directory: 'templates/views'
   }))
 
-if (env !== 'production') {
+if (env === 'production') {
+  ms.use(
+    assets({
+      src: 'public/bundle',
+      dest: 'bundle'
+    })
+  )
+} else {
   var watch = require('metalsmith-watch')
   ms.use(
     watch({
