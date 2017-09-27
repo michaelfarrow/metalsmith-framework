@@ -66,14 +66,12 @@ build:
 
 docker-push:
   steps:
-    - script:
-        code: ls -lat
-    # - internal/docker-push:
-    #     username: $DOCKER_REGISTRY_USERNAME
-    #     password: $DOCKER_REGISTRY_PASSWORD
-    #     tag: $WERCKER_GIT_COMMIT
-    #     repository: $DOCKER_REGISTRY_REPO
-    #     registry: $DOCKER_REGISTRY
-    #     working-dir: $WERCKER_ROOT/src
-    #     cmd: npm run production
-    #     ports: "80"
+    - internal/docker-push:
+        username: $DOCKER_REGISTRY_USERNAME
+        password: $DOCKER_REGISTRY_PASSWORD
+        tag: $WERCKER_GIT_COMMIT
+        repository: $DOCKER_REGISTRY_REPO
+        registry: $DOCKER_REGISTRY
+        working-dir: $WERCKER_ROOT
+        cmd: npm run production
+        ports: "80"
