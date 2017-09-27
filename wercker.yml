@@ -63,15 +63,21 @@ build:
         name: install node production dependencies
         options: --no-optional --only=production
         cwd: "$WERCKER_OUTPUT_DIR"
+    - script:
+        name: debug
+        code: echo $WERCKER_GIT_COMMIT
 
 docker-push:
   steps:
-    - internal/docker-push:
-        username: $DOCKER_REGISTRY_USERNAME
-        password: $DOCKER_REGISTRY_PASSWORD
-        tag: $WERCKER_GIT_COMMIT
-        repository: $DOCKER_REGISTRY_REPO
-        registry: $DOCKER_REGISTRY
-        working-dir: $WERCKER_ROOT
-        cmd: npm run production
-        ports: "80"
+    - script:
+        name: debug
+        code: echo $WERCKER_GIT_COMMIT
+    # - internal/docker-push:
+    #     username: $DOCKER_REGISTRY_USERNAME
+    #     password: $DOCKER_REGISTRY_PASSWORD
+    #     tag: $WERCKER_GIT_COMMIT
+    #     repository: $DOCKER_REGISTRY_REPO
+    #     registry: $DOCKER_REGISTRY
+    #     working-dir: $WERCKER_ROOT
+    #     cmd: npm run production
+    #     ports: "80"
