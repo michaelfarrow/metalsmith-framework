@@ -1,6 +1,6 @@
 box:
   id: node
-  tag: 6.9.5
+  tag: 8.6.0
   ports:
     - '80'
     - '35729'
@@ -65,6 +65,10 @@ build:
         cwd: "$WERCKER_OUTPUT_DIR"
 
 docker-push:
+  box:
+    id: node
+    tag: 8.6.0-alpine
+    cmd: /bin/sh
   steps:
     - internal/docker-push:
         username: $DOCKER_REGISTRY_USERNAME
