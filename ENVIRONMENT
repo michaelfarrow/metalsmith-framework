@@ -1,0 +1,3 @@
+X_WERCKER_SOURCE_DIR=/pipeline/source/src
+X_NODE_ENV=development
+X_PORT=80
