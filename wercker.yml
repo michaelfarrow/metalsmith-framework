@@ -39,7 +39,7 @@ build:
   steps:
     - npm-install:
         name: install node development dependencies
-        options: --no-optional --only=dev
+        options: --no-optional --silent --only=dev
         cwd: $WERCKER_ROOT/src
     - script:
         name: build
@@ -61,7 +61,7 @@ build:
         cwd: $WERCKER_ROOT/src
     - npm-install:
         name: install node production dependencies
-        options: --no-optional --only=production
+        options: --no-optional --silent --only=production
         cwd: "$WERCKER_OUTPUT_DIR"
 
 docker-push:
