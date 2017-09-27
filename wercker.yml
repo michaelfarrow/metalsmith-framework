@@ -55,9 +55,9 @@ build:
     - script:
         name: export the built application
         code: |
-          cp -r "$WERCKER_ROOT/built" "$WERCKER_OUTPUT_DIR"
-          cp -r "$WERCKER_ROOT/index.js" "$WERCKER_OUTPUT_DIR"
-          cp -r "$WERCKER_ROOT/package.json" "$WERCKER_OUTPUT_DIR"
+          cp -r "$WERCKER_ROOT/src/built" "$WERCKER_OUTPUT_DIR"
+          cp -r "$WERCKER_ROOT/src/index.js" "$WERCKER_OUTPUT_DIR"
+          cp -r "$WERCKER_ROOT/src/package.json" "$WERCKER_OUTPUT_DIR"
         cwd: $WERCKER_ROOT/src
     - npm-install:
         name: install node production dependencies
