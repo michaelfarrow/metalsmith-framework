@@ -1,19 +1,25 @@
 {
   "name": "metalsmith-framework",
   "private": true,
-  "depDependencies": {
-    "forever": "0.15.1",
-    "handlebars": "^4.0.5",
-    "metalsmith": "^2.1.0",
-    "metalsmith-layouts": "^1.4.1",
-    "metalsmith-markdown": "^0.2.1",
-    "metalsmith-permalinks": "^0.5.0"
+  "devDependencies": {
+    "forever": "0.15.3",
+    "chokidar": "1.7.0",
+    "pug": "2.0.0-rc.4",
+    "metalsmith": "2.3.0",
+    "metalsmith-watch": "1.0.3",
+    "metalsmith-layouts": "1.8.1",
+    "metalsmith-markdown": "0.2.1",
+    "metalsmith-permalinks": "0.5.0",
+    "lodash.get": "4.4.2"
   },
   "dependencies": {
-    "express": "4.15.5"
+    "express": "4.14.1",
+    "morgan": "1.8.1"
   },
   "scripts": {
-    "build" : "node build",
-    "watch" : "env $([ ! -f ../ENVIRONMENT_LOCAL ] || (cat ../ENVIRONMENT_LOCAL | xargs)) node_modules/.bin/forever --minUptime 1000 --spinSleepTime 1000 index.js",
+    "build" : "NODE_ENV=production node build",
+    "watch" : "node_modules/.bin/forever --minUptime 1000 --spinSleepTime 1000 build.js",
+    "start" : "env $([ ! -f ../ENVIRONMENT_LOCAL ] || (cat ../ENVIRONMENT_LOCAL | xargs)) node_modules/.bin/forever --minUptime 1000 --spinSleepTime 1000 index.js",
+    "production": "NODE_ENV=production node index"
   }
 }

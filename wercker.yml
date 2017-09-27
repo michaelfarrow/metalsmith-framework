@@ -3,6 +3,7 @@ box:
   tag: 6.9.5
   ports:
     - '80'
+    - '35729'
 
 dev:
   steps:
@@ -19,13 +20,15 @@ dev:
         code: |
           ln -s "$WERCKER_ROOT/tools/log" /usr/bin/log
           ln -s "$WERCKER_ROOT/tools/reload" /usr/bin/reload
+          ln -s "$WERCKER_ROOT/tools/_colours" /usr/bin/_colours
           ln -s "$WERCKER_ROOT/tools/reload" /usr/bin/restart
     - script:
         name: run
         code: |
+          touch /var/log/build.log
           touch /var/log/express.log
-          # npm run dev >> /var/log/webpack.log 2>&1 &
-          npm run watch >> /var/log/keystone.log 2>&1 &
+          npm run watch >> /var/log/build.log 2>&1 &
+          npm start >> /var/log/express.log 2>&1 &
     - internal/shell:
         code: |
           stty columns $TERMINAL_COLUMNS
@@ -35,43 +38,41 @@ dev:
 build:
   steps:
     - npm-install:
-        name: install node dependencies
-        options: --no-optional
-        cwd: $WERCKER_ROOT/src
-    - npm-test:
-        name: run tests
+        name: install node development dependencies
+        options: --no-optional --only=dev
         cwd: $WERCKER_ROOT/src
     - script:
-        name: run webpack
-        code: npm run webpack -- -p
-        cwd: $WERCKER_ROOT/src
+        name: build
+        code: npm run build
+    # - npm-test:
+    #     name: run tests
+    #     cwd: $WERCKER_ROOT/src
+    # - script:
+    #     name: run webpack
+    #     code: npm run webpack -- -p
+    #     cwd: $WERCKER_ROOT/src
     - script:
-        name: export the application
+        name: export the built application
         code: |
-          cp -r src "$WERCKER_OUTPUT_DIR"
-          cp -r dokku "$WERCKER_OUTPUT_DIR"
-          mv "$WERCKER_OUTPUT_DIR/dokku/Dockerfile" "$WERCKER_OUTPUT_DIR/Dockerfile"
+          cp -r built "$WERCKER_OUTPUT_DIR"
+          cp -r index.js "$WERCKER_OUTPUT_DIR"
+          cp -r package.json "$WERCKER_OUTPUT_DIR"
+        cwd: $WERCKER_ROOT/src
+    - npm-install:
+        name: install node production dependencies
+        options: --no-optional --only=production
+        cwd: "$WERCKER_OUTPUT_DIR"
 
-deploy:
+docker-push:
   steps:
-    - add-to-known_hosts:
-        hostname: $DOKKU_HOST
-    - add-ssh-key:
-        keyname: DOKKU_KEY
     - script:
-        name: Initialize new repository
-        code: |
-          rm -rf .git
-          git init
-          git config --global user.name "wercker"
-          git config --global user.email "pleasemailus@wercker.com"
-          git remote add dokku dokku@$DOKKU_HOST:$DOKKU_APP
-    - script:
-        name: Add everything to the repository
-        code: |
-          git add .
-          git commit -m "Result of deploy $WERCKER_GIT_COMMIT"
-    - script:
-        name: Push to dokku
-        code: |
-          git push -f dokku master
+        code: ls -lat
+    # - internal/docker-push:
+    #     username: $DOCKER_REGISTRY_USERNAME
+    #     password: $DOCKER_REGISTRY_PASSWORD
+    #     tag: $WERCKER_GIT_COMMIT
+    #     repository: $DOCKER_REGISTRY_REPO
+    #     registry: $DOCKER_REGISTRY
+    #     working-dir: $WERCKER_ROOT/src
+    #     cmd: npm run production
+    #     ports: "80"

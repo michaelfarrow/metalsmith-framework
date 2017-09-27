@@ -1,0 +1,25 @@
+doctype html
+html(lang='en')
+  head
+    meta(charset='utf-8')
+    meta(name='viewport', content='initial-scale=1.0,user-scalable=no,maximum-scale=1,width=device-width')
+    meta(name='description', content=description)
+    title= title
+    block css
+    block head
+      if isDevelopment
+        script.
+          var livereload = document.createElement('script');
+          livereload.setAttribute('src', window.location.protocol + '//' + window.location.hostname + ':35729/livereload.js');
+          document.head.appendChild(livereload);
+  body
+    block header
+      header
+        p: a(href='/') Home
+    block content
+      h1= title
+      p= description
+      div!= contents
+    block footer
+      footer
+        p Generated with #{ generator } &mdash; #[a(target='blank', href=url)= url]

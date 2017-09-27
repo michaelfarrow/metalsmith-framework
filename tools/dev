@@ -8,9 +8,8 @@ MACHINE_URL="http://localhost"
 echo ""
 echo -e "Setting up local development"
 echo -e "============================"
-echo -e "${BGreen}Web${Color_Off}             $MACHINE_URL:80"
-echo -e "${BPurple}BrowserSync${Color_Off}     $MACHINE_URL:3000"
-echo -e "${BYellow}BrowserSync UI${Color_Off}  $MACHINE_URL:3001"
+echo -e "${BGreen}Web${Color_Off}           $MACHINE_URL:80"
+echo -e "${BPurple}Live Reload${Color_Off}  $MACHINE_URL:35729"
 echo ""
 
 export X_TERMINAL_COLUMNS=$(tput cols)
