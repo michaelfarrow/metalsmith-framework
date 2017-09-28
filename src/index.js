@@ -8,7 +8,11 @@ morgan.token('remote-addr', function (req, res) {
 var app = express()
 var development = process.env.NODE_ENV === 'development'
 
-app.use(morgan(development ? 'dev' : ':remote-addr [:date[clf]] ":method :url HTTP/:http-version" :status :res[content-length] :response-time ms'))
+app.use(morgan(development ? 'dev' : ':remote-addr [:date[clf]] ":method :url HTTP/:http-version" :status :res[content-length] :response-time ms', {
+  skip: function (req, res) {
+    return res.statusCode < 400 && !!req.url.match(/^\/bundle\//)
+  }
+}))
 app.use(express.static('built'))
 
 app.listen(process.env.PORT || 80)
