@@ -35,6 +35,10 @@ var ms = Metalsmith(__dirname)
     engine: 'pug',
     directory: 'templates/views'
   }))
+  .use(assets({
+    src: 'public/img',
+    dest: 'img'
+  }))
 
 if (env === 'production') {
   ms.use(
