@@ -6,6 +6,8 @@ html(lang='en')
     meta(name='description', content=description)
     title= title
     block css
+      if isProduction
+        link(href=h().bundle('app.css'), rel='stylesheet')
     block head
       if isDevelopment
         script.
@@ -24,5 +26,4 @@ html(lang='en')
       footer
         p Generated with #{ generator } &mdash; #[a(target='blank', href=url)= url]
     block js
-      script(src=h().bundle('common.js'))
       script(src=h().bundle('app.js'))

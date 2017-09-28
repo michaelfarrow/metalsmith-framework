@@ -19,7 +19,7 @@ var config = {
     modules: [
       __dirname,
       'node_modules',
-    // 'public/css'
+      'public/css'
     ]
   },
   module: { rules: [] },
@@ -35,10 +35,6 @@ var config = {
       })
     },
     new webpack.optimize.OccurrenceOrderPlugin(),
-    new webpack.optimize.CommonsChunkPlugin({
-      name: 'common',
-      filename: isProduction ? '[name]_[hash].js' : '[name].js'
-    }),
     new webpack.NoEmitOnErrorsPlugin()
   ],
   watchOptions: {
@@ -55,18 +51,18 @@ var config = {
 }
 
 if (isProduction) {
-  // config.module.rules = _.union(config.module.rules, [
-  //   {
-  //     test: /\.(p)?css$/,
-  //     loader: ExtractTextPlugin.extract({
-  //       fallbackLoader: 'style-loader',
-  //       loader: 'css-loader?-url!postcss-loader'
-  //     })
-  //   }
-  // ])
+  config.module.rules = _.union(config.module.rules, [
+    {
+      test: /\.(p)?css$/,
+      loader: ExtractTextPlugin.extract({
+        fallbackLoader: 'style-loader',
+        loader: 'css-loader?-url!postcss-loader'
+      })
+    }
+  ])
 
   config.plugins = _.union(config.plugins, [
-    // new ExtractTextPlugin('[name]_[hash].css'),
+    new ExtractTextPlugin('[name]_[hash].css'),
     new ManifestPlugin({
       basePath: '/bundle/'
     })
@@ -74,12 +70,12 @@ if (isProduction) {
 } else {
   config.devtool = 'source-map'
 
-  // config.module.rules = _.union(config.module.rules, [
-  //   {
-  //     test: /\.(p)?css$/,
-  //     loader: 'style-loader!css-loader?-url!postcss-loader'
-  //   }
-  // ])
+  config.module.rules = _.union(config.module.rules, [
+    {
+      test: /\.(p)?css$/,
+      loader: 'style-loader!css-loader?-url!postcss-loader'
+    }
+  ])
 
   config.plugins = _.union(config.plugins, [
     new webpack.WatchIgnorePlugin([path.join(__dirname, 'node_modules')])
