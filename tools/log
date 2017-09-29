@@ -13,4 +13,4 @@ clear
 echo -e "${BGreen}Viewing application log,${Color_Off} hit ctrl+c to end and return to the command line"
 echo ""
 
-tail -f -s 0.1 /var/log/express.log /var/log/webpack.log /var/log/build.log
+tail -f -s 0.1 /var/log/express.log /var/log/webpack.log /var/log/build.log 2>/dev/null
