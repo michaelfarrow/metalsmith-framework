@@ -1,9 +1,4 @@
-var async = require('async')
 var http = require('http')
-
-var check = [
-  '/'
-]
 
 var doCheck = function (path, callback) {
   var options = {
@@ -27,6 +22,6 @@ var doCheck = function (path, callback) {
   request.end()
 }
 
-async.each(check, doCheck, function (err) {
+doCheck('/', function (err) {
   process.exit(err ? 1 : 0)
 })
