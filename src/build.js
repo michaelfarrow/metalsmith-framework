@@ -45,12 +45,12 @@ var ms = Metalsmith(__dirname)
   }))
 
 if (env === 'production') {
-  // ms.use(
-  //   assets({
-  //     src: 'public/bundle',
-  //     dest: 'bundle'
-  //   })
-  // )
+  ms.use(
+    assets({
+      src: 'public/bundle',
+      dest: 'bundle'
+    })
+  )
 } else {
   var watch = require('metalsmith-watch')
   ms.use(
