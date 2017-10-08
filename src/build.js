@@ -3,6 +3,8 @@ var markdown = require('metalsmith-markdown')
 var layouts = require('metalsmith-layouts')
 var permalinks = require('metalsmith-permalinks')
 var assets = require('metalsmith-static')
+var fingerprint = require('metalsmith-fingerprint')
+var webpack = require('./plugins/webpack')
 var get = require('lodash.get')
 
 var env = process.env.NODE_ENV || 'development'
@@ -26,9 +28,11 @@ var ms = Metalsmith(__dirname)
       return helper
     }
   })
-  .source('../content')
+  .source('./content')
   .destination('./built')
   .clean(true)
+  .use(fingerprint({ pattern: 'img/**/*' }))
+  .use(webpack())
   .use(markdown())
   .use(permalinks())
   .use(layouts({
@@ -41,12 +45,12 @@ var ms = Metalsmith(__dirname)
   }))
 
 if (env === 'production') {
-  ms.use(
-    assets({
-      src: 'public/bundle',
-      dest: 'bundle'
-    })
-  )
+  // ms.use(
+  //   assets({
+  //     src: 'public/bundle',
+  //     dest: 'bundle'
+  //   })
+  // )
 } else {
   var watch = require('metalsmith-watch')
   ms.use(

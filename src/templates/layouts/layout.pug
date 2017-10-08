@@ -7,7 +7,7 @@ html(lang='en')
     title= title
     block css
       if isProduction
-        link(href=h().bundle('app.css'), rel='stylesheet')
+        link(href=bundle('app.css'), rel='stylesheet')
     block head
       if isDevelopment
         script.
@@ -26,4 +26,4 @@ html(lang='en')
       footer
         p Generated with #{ generator } &mdash; #[a(target='blank', href=url)= url]
     block js
-      script(src=h().bundle('app.js'))
+      script(src=bundle('app.js'))
