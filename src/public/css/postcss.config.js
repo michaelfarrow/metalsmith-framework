@@ -7,7 +7,7 @@ module.exports = {
     }),
     require('precss'),
     require('postcss-assets')({
-      basePath: 'content/',
+      basePath: 'public/',
       loadPaths: ['img/']
     }),
     require('postcss-color-mix'),
